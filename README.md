@@ -1,10 +1,12 @@
 # Installomator
 
+__Please note, that if you are contributing to this project with new labels or other suggestions in PRs, please put your changes in the fragmented files, not the full `Installomator.sh` script. The full script is now a build of the fragments, and will be overwritten.__
+
 _The one installer script to rule them all._
 
 ![](https://img.shields.io/github/v/release/scriptingosx/Installomator)&nbsp;![](https://img.shields.io/github/downloads/scriptingosx/Installomator/latest/total)&nbsp;![](https://img.shields.io/badge/macOS-10.14%2B-success)&nbsp;![](https://img.shields.io/github/license/scriptingosx/Installomator)
 
-This script is in the "we find it useful, it is working for us" stage.
+This script is in the “we find it useful, it is working for us” stage.
 
 Your production and deployment environment will be different, please test thoroughly before rolling it out to your production.
 
@@ -17,6 +19,10 @@ Discussion, support and advice around Installomator happens in the `#installomat
 Do not create an issue just when you have a questions, but do file an issue or pull request for bugs or wrong behavior. When in doubt, ask in the above Slack channel.
 
 If you have added a new label, then please file a pull request. (and Thank you!)
+
+__Please note, that if you are contributing to this project with new labels or other suggestions in PRs, please put your changes in the fragmented files, not the full `Installomator.sh` script. The full script is now a build of the fragments, and will be overwritten.__
+
+We try to keep the script as short as possible, and with more than 300 labels, we can save 300 lines in the script, if we do not have credit lines on each of these. So we are thankful for your contribution, but we will be removing these lines in the coming releases.
 
 ## More reading
 
@@ -131,7 +137,9 @@ googlechrome)
 
 When you know how to extract these pieces of information from the application and/or download, then you can add an application to Installomator.
 
-The script buildCaseStatement.sh can help with the label creation.
+The script `buildCaseStatement.sh` can help with the label creation.
+
+Please note: Labels should be named in small caps, numbers 0-9, “-”, and “_”. No other characters allowed.
 
 ### Not specific to a management system
 
@@ -227,6 +235,7 @@ There are eight options:
 - `prompt_user`: (default) show a user dialog for each blocking process found abort after three attempts to quit (only if user accepts to quit the apps, otherwise the update is cancelled).
 - `prompt_user_then_kill`: show a user dialog for each blocking process found, attempt to quit two times, kill the process finally.
 - `prompt_user_loop`: Like prompt-user, but clicking "Not Now", will just wait an hour, and then it will ask again.
+WARNING! It might block the MDM agent on the machine, as the scripts gets stuct in waiting until the hour has passed, possibly blocking for other management actions in this time.
 - `tell_user`: User will be showed a notification about the important update, but user is only allowed to quit and continue, and then we ask the app to quit.
 - `tell_user_then_kill`: Show dialog 2 times, and if the quitting fails, the blocking processes will be killed.
 - `kill`: kill process without prompting or giving the user a chance to save.
@@ -251,6 +260,12 @@ The `LOGO` variable is used for the icon shown in dialog boxes. There are these 
 - `mosylem`:     Mosyle Manager (Education)
 - `addigy`:      Addigy
 Path can also be set in the command call, and if file exists, it will be used, like `LOGO="/System/Applications/App\ Store.app/Contents/Resources/AppIcon.icns"` (spaces are escaped).
+
+### App Store apps handling
+Default is `IGNORE_APP_STORE_APPS=no`
+__options:__
+- `no`: If installed app is from App Store (which include VPP installed apps) it will not be touched, no matter it's version (default)
+- `yes`: Replace App Store (and VPP) version of app and handle future updates using Installomator, even if latest version. Shouldn’t give any problems for the user in most cases. Known bad example: Slack will loose all settings.
 
 ### Install behavior (force installation)
 

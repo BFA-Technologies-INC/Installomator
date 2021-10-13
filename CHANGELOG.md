@@ -1,7 +1,23 @@
+## v0.7 - pre-release
+
+- default for `BLOCKING_PROCESS_ACTION`is now `BLOCKING_PROCESS_ACTION=tell_user` and not `prompt_user`. It will demand the user to quit the app to get it updated, and not present any option to skip it. In considering various use cases in different MDM solutions this is the best option going forward. Users usually choose to update, and is most often not bothered much with this information. If it's absoultely a bad time, then they can move the dialog box to the side, and click it when ready. 
+- script is now assembled from fragments. This helps avoid merging conflicts on git and allows the core team to work on the script logic while also accepting new labels. See the "Assemble Script ReadMe" for details.
+- We now detect App Store installed apps, and we do not replace them automatically. An example is Slack that will loose all settings if it is suddenly changed from App Store version to the "web" version (they differ in the handling of settings files). If `INSTALL=force` then we will replace the App Store app. We log all this.
 - Change in finding installed apps. We now look in /Applications and /Applications/Utilities first. If not found there, we use spotligt to find it. (We discovered a problem when a user has Parallels Windows installed with Microsoft Edge in it. Then Installomator wanted to update the app all the time, becaus spotligt found that Windows version of the app that Parallels created.)
-- Added bunch of new labels
-- Improved `buildCaseStatement.sh` a lot. It is a great start when figuring out how to create a new label for an app, or a piece of software.
+- Added bunch of new labels, and improved others.
+- Renamed `buildCaseStatement.sh` to `buildLabel.sh` and improved it a lot. It is a great start when figuring out how to create a new label for an app, or a piece of software. Look at the tutorials in our wiki.
 - Mosyle changed their app name from Business to Self-Service
+
+## v0.6 - 2021-07-14
+
+- several new and updated labels, for a total of 302
+- versionKey variable can be used to choose which Info.plist key to get the version from
+- an appCustomVersion() {} function can now be used in a label
+- with INSTALL=force, the script will not be using updateTool, but will reinstall instead
+- added quit and quit_kill options to NOTIFY
+- updated buildCaseStatement.sh
+- updated buildInstallomatorPkg.sh to use notarytool (requires Xcode 13)
+- several minor fixes
 
 ## v0.5 - 2021-04-13
 
